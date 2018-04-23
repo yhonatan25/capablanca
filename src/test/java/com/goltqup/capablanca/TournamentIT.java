@@ -5,20 +5,17 @@ import com.goltqup.capablanca.service.encoding.TournamentIdEncoder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebFlux;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.test.StepVerifier;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureWebTestClient
-@AutoConfigureWebFlux
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class TournamentIT {
 
     @Autowired
