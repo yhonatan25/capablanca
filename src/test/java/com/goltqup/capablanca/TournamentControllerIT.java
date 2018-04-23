@@ -17,7 +17,7 @@ import reactor.test.StepVerifier;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = "spring.main.web-application-type=reactive")
+@SpringBootTest
 @AutoConfigureWebTestClient
 public class TournamentControllerIT {
 
