@@ -19,7 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 @SpringBootTest
 @AutoConfigureWebTestClient
 @AutoConfigureWebFlux
-public class TournamentControllerIT {
+public class TournamentIT {
 
     @Autowired
     private TournamentIdEncoder tournamentIdEncoder;
