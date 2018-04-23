@@ -1,15 +1,15 @@
 package com.goltqup.capablanca.domain.mongo;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 public class Tournament {
 
     @Id

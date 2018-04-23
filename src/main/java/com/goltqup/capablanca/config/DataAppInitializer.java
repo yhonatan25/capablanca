@@ -20,7 +20,7 @@ public class DataAppInitializer {
     @EventListener(ApplicationReadyEvent.class)
     public void run() {
         final Tournament firstTournament = tournamentService.getTournaments().blockFirst();
-        if (firstTournament == null){
+        if (firstTournament == null) {
             final String tournamentName = "FIFA";
             final String tournamentPlace = "Russia";
             final int tournamentYear = 2018;
@@ -29,7 +29,7 @@ public class DataAppInitializer {
                     .subscribe(null,
                             null,
                             () -> this.tournamentService.getTournaments()
-                                    .subscribe(System.out::println));;
+                                    .subscribe(System.out::println));
         }
     }
 }

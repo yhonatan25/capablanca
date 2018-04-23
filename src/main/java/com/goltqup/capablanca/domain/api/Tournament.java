@@ -1,7 +1,6 @@
 package com.goltqup.capablanca.domain.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tournament {
@@ -52,8 +51,7 @@ public class Tournament {
         final Object this$place = this.getPlace();
         final Object other$place = other.getPlace();
         if (this$place == null ? other$place != null : !this$place.equals(other$place)) return false;
-        if (this.getYear() != other.getYear()) return false;
-        return true;
+        return this.getYear() == other.getYear();
     }
 
     public int hashCode() {
