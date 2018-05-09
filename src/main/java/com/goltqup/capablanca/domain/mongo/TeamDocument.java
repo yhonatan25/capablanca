@@ -1,6 +1,5 @@
 package com.goltqup.capablanca.domain.mongo;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -10,25 +9,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @Getter
 @Setter
-public class Tournament {
+public class TeamDocument {
 
     @Id
     private String id;
 
+    @Indexed
     private String name;
 
-    private String place;
+    private int playedMatches;
 
-    private int year;
+    private int wonMatches;
 
-    @Indexed
-    private String encodedId;
+    private int drawMatches;
 
-    public Tournament(final String name, final String place, final int year, final String encodedId) {
-        this.name = name;
-        this.place = place;
-        this.year = year;
-        this.encodedId = encodedId;
-    }
+    private int defeatedMatches;
+
+    private int goalsFor;
+
+    private int goalsAgainst;
+
+    private int goalDifference;
+
+    private int points;
 
 }

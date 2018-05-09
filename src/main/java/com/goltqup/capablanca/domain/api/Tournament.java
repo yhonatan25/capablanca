@@ -2,72 +2,58 @@ package com.goltqup.capablanca.domain.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+import java.util.Set;
+
+import static java.util.Base64.getEncoder;
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notEmpty;
+import static org.springframework.util.Assert.state;
+
+@Getter
 public class Tournament {
 
     private final String id;
     private final String name;
     private final String place;
     private final int year;
+    @JsonProperty("groups")
+    private final Set<Group> groupSet;
 
     @JsonCreator
-    public Tournament(@JsonProperty("id") final String id,
-                      @JsonProperty("name") final String name,
+    public Tournament(@JsonProperty("name") final String name,
                       @JsonProperty("place") final String place,
-                      @JsonProperty("year") final int year) {
-        this.id = id;
+                      @JsonProperty("year") final int year,
+                      @JsonProperty("groups") final Set<Group> groupSet) {
+        hasText(name, "Tournament name must have text.");
+        hasText(place, "Tournament place must have text.");
+        state(year >= 2018, "Tournament year must be greater than or equals to 2018.");
+        notEmpty(groupSet, "Tournament group set must not be empty.");
+
         this.name = name;
         this.place = place;
         this.year = year;
+        final String stringToEncode = new StringBuilder(name).append(place).append(year).toString();
+        this.id = getEncoder().encodeToString(stringToEncode.getBytes());
+        this.groupSet = groupSet;
     }
 
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getPlace() {
-        return this.place;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Tournament)) return false;
-        final Tournament other = (Tournament) o;
-        final Object this$id = this.getId();
-        final Object other$id = other.getId();
-        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
-        final Object this$name = this.getName();
-        final Object other$name = other.getName();
-        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
-        final Object this$place = this.getPlace();
-        final Object other$place = other.getPlace();
-        if (this$place == null ? other$place != null : !this$place.equals(other$place)) return false;
-        return this.getYear() == other.getYear();
+    public boolean equals(Object object) {
+        if (object == this) return true;
+        if (!(object instanceof Tournament)) return false;
+        final Tournament other = (Tournament) object;
+        return id.equals(other.id)
+                && name.equals(other.name)
+                && place.equals(other.place)
+                && year == other.year;
     }
 
     public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Object $id = this.getId();
-        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        final Object $name = this.getName();
-        result = result * PRIME + ($name == null ? 43 : $name.hashCode());
-        final Object $place = this.getPlace();
-        result = result * PRIME + ($place == null ? 43 : $place.hashCode());
-        result = result * PRIME + this.getYear();
-        return result;
+        return id.hashCode();
     }
 
     public String toString() {
-        return "Tournament(id=" + this.getId() + ", name=" + this.getName() + ", place=" + this.getPlace() + ", year=" + this.getYear() + ")";
+        return "TournamentDocument(id=" + this.getId() + ", name=" + this.getName() + ", place=" + this.getPlace() + ", year=" + this.getYear() + ")";
     }
 }
