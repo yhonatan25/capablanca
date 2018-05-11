@@ -3,11 +3,13 @@ package com.goltqup.capablanca.domain.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.Getter;
 
 import static java.util.Base64.getEncoder;
 import static org.springframework.util.Assert.hasText;
 
 @JsonDeserialize(builder = Team.TeamBuilder.class)
+@Getter
 public class Team {
 
     private final String id;
@@ -41,46 +43,6 @@ public class Team {
         this.goalsAgainst = teamBuilder.goalsAgainst;
         this.goalDifference = teamBuilder.goalDifference;
         this.points = teamBuilder.points;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getPlayedMatches() {
-        return this.playedMatches;
-    }
-
-    public int getWonMatches() {
-        return this.wonMatches;
-    }
-
-    public int getDrawMatches() {
-        return this.drawMatches;
-    }
-
-    public int getDefeatedMatches() {
-        return this.defeatedMatches;
-    }
-
-    public int getGoalsFor() {
-        return this.goalsFor;
-    }
-
-    public int getGoalsAgainst() {
-        return this.goalsAgainst;
-    }
-
-    public int getGoalDifference() {
-        return this.goalDifference;
-    }
-
-    public int getPoints() {
-        return this.points;
     }
 
     public boolean equals(final Object object) {
