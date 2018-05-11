@@ -29,9 +29,10 @@ public class GroupDocument {
     @Field("teams")
     private Set<TeamDocument> teamDocumentSet;
 
-    public GroupDocument(final String name, final String encodedId) {
+    public GroupDocument(final String name, final String encodedId, final Set<TeamDocument> teamDocumentSet) {
         this.name = name;
         this.encodedId = encodedId;
+        this.teamDocumentSet = teamDocumentSet;
     }
 
 }

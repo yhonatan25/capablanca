@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.Set;
 
 import static java.util.Base64.getEncoder;
+import static java.util.Collections.unmodifiableSet;
 import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notEmpty;
 import static org.springframework.util.Assert.state;
@@ -18,6 +19,7 @@ public class Tournament {
     private final String name;
     private final String place;
     private final int year;
+
     @JsonProperty("groups")
     private final Set<Group> groupSet;
 
@@ -34,12 +36,12 @@ public class Tournament {
         this.name = name;
         this.place = place;
         this.year = year;
-        final String stringToEncode = new StringBuilder(name).append(place).append(year).toString();
+        final String stringToEncode = name + place + year;
         this.id = getEncoder().encodeToString(stringToEncode.getBytes());
-        this.groupSet = groupSet;
+        this.groupSet = unmodifiableSet(groupSet);
     }
 
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object == this) return true;
         if (!(object instanceof Tournament)) return false;
         final Tournament other = (Tournament) object;
@@ -54,6 +56,6 @@ public class Tournament {
     }
 
     public String toString() {
-        return "TournamentDocument(id=" + this.getId() + ", name=" + this.getName() + ", place=" + this.getPlace() + ", year=" + this.getYear() + ")";
+        return "TournamentDocument(id=" + this.getId() + ", name=" + this.getName() + ", place=" + this.getPlace() + ", year=" + this.getYear() + ", groups=" + this.getGroupSet().toString() + ")";
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.test.StepVerifier;
 
-import static com.goltqup.capablanca.ExpectedTournamentSupplier.getExpectedTournament;
+import static com.goltqup.capablanca.TournamentAssert.getExpectedTournament;
+import static com.goltqup.capablanca.TournamentAssert.tournamentMatchesExpected;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
@@ -31,7 +32,7 @@ public class TournamentIT {
                 .returnResult(Tournament.class);
 
         StepVerifier.create(tournamentFluxExchangeResult.getResponseBody())
-                .expectNext(getExpectedTournament())
+                .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, getExpectedTournament()))
                 .thenCancel().verify();
     }
 

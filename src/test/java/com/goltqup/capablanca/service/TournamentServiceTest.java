@@ -1,6 +1,5 @@
 package com.goltqup.capablanca.service;
 
-import com.goltqup.capablanca.domain.api.Group;
 import com.goltqup.capablanca.domain.api.Tournament;
 import com.goltqup.capablanca.domain.mongo.TournamentDocument;
 import com.goltqup.capablanca.repository.TournamentRepository;
@@ -18,9 +17,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Set;
 
-import static com.goltqup.capablanca.ExpectedTournamentSupplier.getExpectedTournament;
+import static com.goltqup.capablanca.TournamentAssert.getExpectedTournament;
+import static com.goltqup.capablanca.TournamentAssert.tournamentMatchesExpected;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static reactor.test.StepVerifier.create;
@@ -100,10 +99,5 @@ public class TournamentServiceTest {
                 .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, expectedTournament))
                 .expectComplete()
                 .verify();
-    }
-
-    private boolean tournamentMatchesExpected(final Tournament actual, final Tournament expected) {
-        final Set<Group> expectedGroupSet = expected.getGroupSet();
-        return expected.equals(actual);
     }
 }

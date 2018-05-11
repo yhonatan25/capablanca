@@ -14,8 +14,10 @@ public class TeamDocument {
     @Id
     private String id;
 
-    @Indexed
     private String name;
+
+    @Indexed
+    private String encodedId;
 
     private int playedMatches;
 
@@ -32,5 +34,10 @@ public class TeamDocument {
     private int goalDifference;
 
     private int points;
+
+    public TeamDocument(final String name, final String encodedId) {
+        this.name = name;
+        this.encodedId = encodedId;
+    }
 
 }

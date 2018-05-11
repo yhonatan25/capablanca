@@ -1,8 +1,10 @@
 package com.goltqup.capablanca.service;
 
 import com.goltqup.capablanca.domain.api.Group;
+import com.goltqup.capablanca.domain.api.Team;
 import com.goltqup.capablanca.domain.api.Tournament;
 import com.goltqup.capablanca.domain.mongo.GroupDocument;
+import com.goltqup.capablanca.domain.mongo.TeamDocument;
 import com.goltqup.capablanca.domain.mongo.TournamentDocument;
 import com.goltqup.capablanca.repository.TournamentRepository;
 import org.reactivestreams.Publisher;
@@ -20,7 +22,7 @@ public class TournamentService {
 
     private final TournamentRepository tournamentRepository;
 
-    public TournamentService(final TournamentRepository tournamentRepository) {
+    TournamentService(final TournamentRepository tournamentRepository) {
         this.tournamentRepository = tournamentRepository;
     }
 
@@ -51,7 +53,17 @@ public class TournamentService {
     }
 
     private Group getGroup(final GroupDocument groupDocument) {
-        return new Group(groupDocument.getName());
+        return new Group(groupDocument.getName(), getTeamSet(groupDocument.getTeamDocumentSet()));
+    }
+
+    private Set<Team> getTeamSet(final Set<TeamDocument> teamDocumentSet) {
+        return teamDocumentSet.stream()
+                .map(this::getTeam)
+                .collect(toSet());
+    }
+
+    private Team getTeam(final TeamDocument teamDocument) {
+        return new Team.TeamBuilder(teamDocument.getName()).build();
     }
 
     private TournamentDocument getTournamentDocument(final Tournament tournament) {
@@ -67,6 +79,12 @@ public class TournamentService {
     }
 
     private GroupDocument getGroupDocument(final Group group) {
-        return new GroupDocument(group.getName(), group.getId());
+        return new GroupDocument(group.getName(), group.getId(), getTeamDocumentSet(group.getTeamSet()));
+    }
+
+    private Set<TeamDocument> getTeamDocumentSet(final Set<Team> teamSet) {
+        return teamSet.stream()
+                .map(team -> new TeamDocument(team.getName(), team.getId()))
+                .collect(toSet());
     }
 }
