@@ -28,9 +28,10 @@ import static reactor.test.StepVerifier.create;
 @RunWith(SpringRunner.class)
 @DataMongoTest
 public class TournamentServiceTest {
-
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    private static final String TOURNAMENT_ID = "RklGQVJ1c3NpYTIwMTg=";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -96,6 +97,24 @@ public class TournamentServiceTest {
         final Flux<Tournament> tournamentFlux = tournamentService.getTournaments();
 
         create(tournamentFlux)
+                .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, expectedTournament))
+                .expectComplete()
+                .verify();
+    }
+
+    @Test
+    public void testGetTournamentByIdWhenCollectionIsEmpty() {
+        final Mono<Tournament> tournamentMono = tournamentService.getTournament(TOURNAMENT_ID);
+        create(tournamentMono).expectComplete().verify();
+    }
+
+    @Test
+    public void testGetTournamentByIdAfterSavingOne() {
+        final Tournament expectedTournament = tournamentService.save(getExpectedTournament()).block();
+
+        final Mono<Tournament> tournamentMono = tournamentService.getTournament(TOURNAMENT_ID);
+
+        create(tournamentMono)
                 .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, expectedTournament))
                 .expectComplete()
                 .verify();

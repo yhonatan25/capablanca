@@ -19,7 +19,10 @@ public class CapablancaConfiguration {
     RouterFunction<?> routerFunction(final TournamentService tournamentService) {
         return route(GET("/tournaments").and(accept(APPLICATION_JSON_UTF8)),
                 req -> ok().contentType(APPLICATION_JSON_UTF8)
-                        .body(tournamentService.getTournaments(), Tournament.class));
+                        .body(tournamentService.getTournaments(), Tournament.class))
+                .andRoute(GET("/tournament/{tournamentId}").and(accept(APPLICATION_JSON_UTF8)),
+                        req -> ok().contentType(APPLICATION_JSON_UTF8)
+                                .body(tournamentService.getTournament(req.pathVariable("tournamentId")), Tournament.class));
     }
 
 }

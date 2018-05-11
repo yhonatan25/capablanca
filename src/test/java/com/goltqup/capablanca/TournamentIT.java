@@ -36,4 +36,18 @@ public class TournamentIT {
                 .thenCancel().verify();
     }
 
+    @Test
+    public void testGetTournamentByIdContainsOneTournament() {
+        final FluxExchangeResult<Tournament> tournamentFluxExchangeResult = webTestClient.get()
+                .uri("/tournament/RklGQVJ1c3NpYTIwMTg=").accept(APPLICATION_JSON_UTF8)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(APPLICATION_JSON_UTF8)
+                .returnResult(Tournament.class);
+
+        StepVerifier.create(tournamentFluxExchangeResult.getResponseBody())
+                .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, getExpectedTournament()))
+                .thenCancel().verify();
+    }
+
 }

@@ -37,6 +37,11 @@ public class TournamentService {
                 .map(this::getTournament);
     }
 
+    public Mono<Tournament> getTournament(final String tournamentId) {
+        return tournamentRepository.findOneByEncodedId(tournamentId)
+                .map(this::getTournament);
+    }
+
     private Publisher<? extends Tournament> getTournamentPublisher(final TournamentDocument tournamentDocument) {
         return just(getTournament(tournamentDocument));
     }
