@@ -58,7 +58,7 @@ public class DataAppInitializer {
     private static Map<String, List<String>> getTournamentGroupsMap() {
         final Map<String, List<String>> tournamentGroupsMap = new HashMap<>();
         tournamentGroupsMap.put("A", asList("Russia", "Saudi_Arabia", "Egypt", "Uruguay"));
-        tournamentGroupsMap.put("B", asList("Portugal", "Spain", "Morocco", "IR Iran"));
+        tournamentGroupsMap.put("B", asList("Portugal", "Spain", "Morocco", "IR_Iran"));
         tournamentGroupsMap.put("C", asList("France", "Australia", "Peru", "Denmark"));
         tournamentGroupsMap.put("D", asList("Argentina", "Iceland", "Croatia", "Nigeria"));
         tournamentGroupsMap.put("E", asList("Brazil", "Switzerland", "Costa_Rica", "Serbia"));
