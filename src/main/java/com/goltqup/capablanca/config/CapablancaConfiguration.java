@@ -20,7 +20,7 @@ public class CapablancaConfiguration {
         return route(GET("/tournaments").and(accept(APPLICATION_JSON_UTF8)),
                 req -> ok().contentType(APPLICATION_JSON_UTF8)
                         .body(tournamentService.getTournaments(), Tournament.class))
-                .andRoute(GET("/tournament/{tournamentId}").and(accept(APPLICATION_JSON_UTF8)),
+                .andRoute(GET("/tournaments/{tournamentId}").and(accept(APPLICATION_JSON_UTF8)),
                         req -> ok().contentType(APPLICATION_JSON_UTF8)
                                 .body(tournamentService.getTournament(req.pathVariable("tournamentId")), Tournament.class));
     }

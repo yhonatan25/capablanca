@@ -39,7 +39,7 @@ public class TournamentIT {
     @Test
     public void testGetTournamentByIdContainsOneTournament() {
         final FluxExchangeResult<Tournament> tournamentFluxExchangeResult = webTestClient.get()
-                .uri("/tournament/RklGQVJ1c3NpYTIwMTg=").accept(APPLICATION_JSON_UTF8)
+                .uri("/tournaments/RklGQVJ1c3NpYTIwMTg=").accept(APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(APPLICATION_JSON_UTF8)
