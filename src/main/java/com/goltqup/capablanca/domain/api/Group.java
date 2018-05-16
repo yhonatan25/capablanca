@@ -18,14 +18,19 @@ public class Group {
     private final String name;
     @JsonProperty("teams")
     private final Set<Team> teamSet;
+    @JsonProperty("matches")
+    private final Set<Match> matchSet;
 
     @JsonCreator
-    public Group(@JsonProperty("name") final String name, @JsonProperty("teams") final Set<Team> teamSet) {
+    public Group(@JsonProperty("name") final String name,
+                 @JsonProperty("teams") final Set<Team> teamSet, @JsonProperty("matches") final Set<Match> matchSet) {
         hasText(name, "Group name must have text.");
         notEmpty(teamSet, "Group team set must not be empty.");
+        notEmpty(matchSet, "Group match set must not be empty.");
         this.name = name;
         this.id = getEncoder().encodeToString(name.getBytes());
         this.teamSet = unmodifiableSet(teamSet);
+        this.matchSet = unmodifiableSet(matchSet);
     }
 
     public boolean equals(final Object object) {
@@ -40,6 +45,6 @@ public class Group {
     }
 
     public String toString() {
-        return "Group(id=" + this.getId() + ", name=" + this.getName() + ", teams=" + this.getTeamSet().toString() + ")";
+        return "Group(id=" + this.getId() + ", name=" + this.getName() + ", teams=" + this.getTeamSet() + ")";
     }
 }

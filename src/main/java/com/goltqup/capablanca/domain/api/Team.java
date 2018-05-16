@@ -61,7 +61,7 @@ public class Team {
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static class TeamBuilder {
+    public static final class TeamBuilder {
 
         private final String id;
         private final String name;

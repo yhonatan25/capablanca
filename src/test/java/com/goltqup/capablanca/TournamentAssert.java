@@ -1,6 +1,7 @@
 package com.goltqup.capablanca;
 
 import com.goltqup.capablanca.domain.api.Group;
+import com.goltqup.capablanca.domain.api.Match;
 import com.goltqup.capablanca.domain.api.Team;
 import com.goltqup.capablanca.domain.api.Tournament;
 
@@ -70,12 +71,18 @@ public class TournamentAssert {
     }
 
     private static boolean groupMatchesExpected(final Group actualGroup, final Group expectedGroup) {
-        return actualGroup != null && teamSetsAreEquals(actualGroup.getTeamSet(), expectedGroup.getTeamSet());
+        return actualGroup != null
+                && teamSetsAreEquals(actualGroup.getTeamSet(), expectedGroup.getTeamSet())
+                && matchSetsAreEquals(actualGroup.getMatchSet(), expectedGroup.getMatchSet());
     }
 
     private static boolean teamSetsAreEquals(final Set<Team> actualTeamSet, final Set<Team> expectedTeamSet) {
         return teamSetMatchesExpected(actualTeamSet, expectedTeamSet)
                 && teamSetsHaveTheSameSize(actualTeamSet, expectedTeamSet);
+    }
+
+    private static boolean matchSetsAreEquals(final Set<Match> actualMatchSet, final Set<Match> expectedMatchSet) {
+        return false;
     }
 
     private static boolean teamSetMatchesExpected(final Set<Team> actualTeamSet, final Set<Team> expectedTeamSet) {
