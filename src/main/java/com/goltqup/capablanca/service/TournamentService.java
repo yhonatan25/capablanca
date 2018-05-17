@@ -1,9 +1,11 @@
 package com.goltqup.capablanca.service;
 
 import com.goltqup.capablanca.domain.api.Group;
+import com.goltqup.capablanca.domain.api.Match;
 import com.goltqup.capablanca.domain.api.Team;
 import com.goltqup.capablanca.domain.api.Tournament;
 import com.goltqup.capablanca.domain.mongo.GroupDocument;
+import com.goltqup.capablanca.domain.mongo.MatchDocument;
 import com.goltqup.capablanca.domain.mongo.TeamDocument;
 import com.goltqup.capablanca.domain.mongo.TournamentDocument;
 import com.goltqup.capablanca.repository.TournamentRepository;
@@ -58,7 +60,7 @@ public class TournamentService {
     }
 
     private Group getGroup(final GroupDocument groupDocument) {
-        return new Group(groupDocument.getName(), getTeamSet(groupDocument.getTeamDocumentSet()));
+        return new Group(groupDocument.getName(), getTeamSet(groupDocument.getTeamDocumentSet()), getMatchSet(groupDocument.getMatchDocumentSet()));
     }
 
     private Set<Team> getTeamSet(final Set<TeamDocument> teamDocumentSet) {
@@ -69,6 +71,22 @@ public class TournamentService {
 
     private Team getTeam(final TeamDocument teamDocument) {
         return new Team.TeamBuilder(teamDocument.getName()).build();
+    }
+
+    private Set<Match> getMatchSet(final Set<MatchDocument> matchDocumentSet) {
+        return matchDocumentSet.stream()
+                .map(this::getMatch)
+                .collect(toSet());
+    }
+
+    private Match getMatch(final MatchDocument matchDocument) {
+        return new Match.MatchBuilder(matchDocument.getStadium(),
+                matchDocument.getSchedule(),
+                matchDocument.getLocalTeam(),
+                matchDocument.getVisitorTeam())
+                .localGoals(matchDocument.getLocalGoals())
+                .visitorGoals(matchDocument.getVisitorGoals())
+                .build();
     }
 
     private TournamentDocument getTournamentDocument(final Tournament tournament) {
@@ -84,12 +102,27 @@ public class TournamentService {
     }
 
     private GroupDocument getGroupDocument(final Group group) {
-        return new GroupDocument(group.getName(), group.getId(), getTeamDocumentSet(group.getTeamSet()));
+        return new GroupDocument(group.getName(),
+                group.getId(),
+                getTeamDocumentSet(group.getTeamSet()),
+                getMatchDocumentSet(group.getMatchSet()));
     }
 
     private Set<TeamDocument> getTeamDocumentSet(final Set<Team> teamSet) {
         return teamSet.stream()
                 .map(team -> new TeamDocument(team.getName(), team.getId()))
                 .collect(toSet());
+    }
+
+    private Set<MatchDocument> getMatchDocumentSet(final Set<Match> matchSet) {
+        return matchSet.stream().map(this::getMatchDocument).collect(toSet());
+    }
+
+    private MatchDocument getMatchDocument(final Match match) {
+        return new MatchDocument(match.getId(),
+                match.getStadium(),
+                match.getSchedule(),
+                match.getLocalTeam(),
+                match.getVisitorTeam());
     }
 }
