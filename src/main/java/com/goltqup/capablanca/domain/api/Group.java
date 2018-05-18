@@ -23,7 +23,8 @@ public class Group {
 
     @JsonCreator
     public Group(@JsonProperty("name") final String name,
-                 @JsonProperty("teams") final Set<Team> teamSet, @JsonProperty("matches") final Set<Match> matchSet) {
+                 @JsonProperty("teams") final Set<Team> teamSet,
+                 @JsonProperty("matches") final Set<Match> matchSet) {
         hasText(name, "Group name must have text.");
         notEmpty(teamSet, "Group team set must not be empty.");
         notEmpty(matchSet, "Group match set must not be empty.");
@@ -45,6 +46,6 @@ public class Group {
     }
 
     public String toString() {
-        return "Group(id=" + this.getId() + ", name=" + this.getName() + ", teams=" + this.getTeamSet() + ")";
+        return "Group(id=" + this.getId() + ", name=" + this.getName() + ", teams=" + this.getTeamSet() + "matches=" + this.getMatchSet() + ")";
     }
 }

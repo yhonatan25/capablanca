@@ -18,8 +18,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static com.goltqup.capablanca.TournamentAssert.getExpectedTournament;
 import static com.goltqup.capablanca.TournamentAssert.tournamentMatchesExpected;
+import static com.goltqup.capablanca.TournamentProvider.getExpectedTournament;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static reactor.test.StepVerifier.create;
