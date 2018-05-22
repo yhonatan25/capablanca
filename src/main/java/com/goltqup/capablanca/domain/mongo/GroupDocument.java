@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Set;
 
-@Document
+@Document(collection = "group")
 @Getter
 @Setter
 public class GroupDocument {
