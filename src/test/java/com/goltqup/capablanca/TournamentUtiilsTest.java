@@ -5,11 +5,32 @@ import com.goltqup.capablanca.domain.api.Match;
 import com.goltqup.capablanca.domain.api.Team;
 import org.junit.Test;
 
+import java.time.ZoneId;
 import java.util.Set;
 
 import static com.goltqup.capablanca.TournamentProvider.getExpectedTournament;
 
 public class TournamentUtiilsTest {
+
+    @Test
+    public void printGuatemalaTimeZone() {
+        ZoneId.getAvailableZoneIds().stream().filter(s -> s.contains("Guatemala")).forEach(System.out::println);
+    }
+
+    @Test
+    public void printStadiumProperties() {
+        getExpectedTournament().getGroupSet().stream()
+                .flatMap(group -> group.getMatchSet().stream())
+                .map(Match::getStadium)
+                .distinct()
+                .forEach(this::printStadiumProperty);
+    }
+
+    private void printStadiumProperty(final String stadium) {
+        System.out.print("stadium." + stadium + "=");
+        System.out.println(stadium.replaceAll("_", " "));
+
+    }
 
     @Test
     public void printGroupsCode() {
