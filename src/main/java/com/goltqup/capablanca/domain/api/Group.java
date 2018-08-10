@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.Set;
 
+import static com.goltqup.capablanca.util.CollectionUtils.areEqualCollections;
 import static java.util.Base64.getEncoder;
 import static java.util.Collections.unmodifiableSet;
 import static org.springframework.util.Assert.hasText;
@@ -38,7 +39,9 @@ public class Group {
         if (object == this) return true;
         if (!(object instanceof Group)) return false;
         final Group other = (Group) object;
-        return id.equals(other.id) && name.equals(other.name);
+        return id.equals(other.id) && name.equals(other.name)
+                && areEqualCollections(teamSet, other.teamSet)
+                && areEqualCollections(matchSet, other.matchSet);
     }
 
     public int hashCode() {

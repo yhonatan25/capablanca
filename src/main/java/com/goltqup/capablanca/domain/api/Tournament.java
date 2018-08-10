@@ -2,10 +2,12 @@ package com.goltqup.capablanca.domain.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.goltqup.capablanca.util.CollectionUtils;
 import lombok.Getter;
 
 import java.util.Set;
 
+import static com.goltqup.capablanca.util.CollectionUtils.areEqualCollections;
 import static java.util.Base64.getEncoder;
 import static java.util.Collections.unmodifiableSet;
 import static org.springframework.util.Assert.hasText;
@@ -48,7 +50,8 @@ public class Tournament {
         return id.equals(other.id)
                 && name.equals(other.name)
                 && place.equals(other.place)
-                && year == other.year;
+                && year == other.year
+                && areEqualCollections(groupSet, other.groupSet);
     }
 
     public int hashCode() {
