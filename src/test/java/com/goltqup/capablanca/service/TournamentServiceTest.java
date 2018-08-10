@@ -18,8 +18,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static com.goltqup.capablanca.TournamentAssert.tournamentMatchesExpected;
 import static com.goltqup.capablanca.TournamentProvider.getExpectedTournament;
+import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static reactor.test.StepVerifier.create;
@@ -97,7 +97,7 @@ public class TournamentServiceTest {
         final Flux<Tournament> tournamentFlux = tournamentService.getTournaments();
 
         create(tournamentFlux)
-                .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, expectedTournament))
+                .expectNextMatches(isEqual(expectedTournament))
                 .expectComplete()
                 .verify();
     }
@@ -115,7 +115,7 @@ public class TournamentServiceTest {
         final Mono<Tournament> tournamentMono = tournamentService.getTournament(TOURNAMENT_ID);
 
         create(tournamentMono)
-                .expectNextMatches(tournament -> tournamentMatchesExpected(tournament, expectedTournament))
+                .expectNextMatches(isEqual(expectedTournament))
                 .expectComplete()
                 .verify();
     }
