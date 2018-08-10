@@ -10,7 +10,9 @@ import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.test.StepVerifier;
 
-import static com.goltqup.capablanca.TournamentProvider.getExpectedTournament;
+import java.io.IOException;
+
+import static com.goltqup.capablanca.TournamentProvider.getExpectedTournamentFromJson;
 import static java.util.function.Predicate.isEqual;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
@@ -23,7 +25,7 @@ public class TournamentIT {
     private WebTestClient webTestClient;
 
     @Test
-    public void testGetTournamentsContainsOneTournament() {
+    public void testGetTournamentsContainsOneTournament() throws IOException {
         final FluxExchangeResult<Tournament> tournamentFluxExchangeResult = webTestClient.get()
                 .uri("/tournaments").accept(APPLICATION_JSON_UTF8)
                 .exchange()
@@ -31,13 +33,14 @@ public class TournamentIT {
                 .expectHeader().contentType(APPLICATION_JSON_UTF8)
                 .returnResult(Tournament.class);
 
+        final Tournament expectedTournamentFromJson = getExpectedTournamentFromJson();
         StepVerifier.create(tournamentFluxExchangeResult.getResponseBody())
-                .expectNextMatches(isEqual(getExpectedTournament()))
+                .expectNextMatches(isEqual(expectedTournamentFromJson))
                 .thenCancel().verify();
     }
 
     @Test
-    public void testGetTournamentByIdContainsOneTournament() {
+    public void testGetTournamentByIdContainsOneTournament() throws IOException {
         final FluxExchangeResult<Tournament> tournamentFluxExchangeResult = webTestClient.get()
                 .uri("/tournaments/RklGQVJ1c3NpYTIwMTg=").accept(APPLICATION_JSON_UTF8)
                 .exchange()
@@ -45,8 +48,9 @@ public class TournamentIT {
                 .expectHeader().contentType(APPLICATION_JSON_UTF8)
                 .returnResult(Tournament.class);
 
+        final Tournament expectedTournamentFromJson = getExpectedTournamentFromJson();
         StepVerifier.create(tournamentFluxExchangeResult.getResponseBody())
-                .expectNextMatches(isEqual((getExpectedTournament())))
+                .expectNextMatches(isEqual((expectedTournamentFromJson)))
                 .thenCancel().verify();
     }
 

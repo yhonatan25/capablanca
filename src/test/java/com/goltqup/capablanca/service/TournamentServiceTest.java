@@ -16,9 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
 import java.util.List;
 
-import static com.goltqup.capablanca.TournamentProvider.getExpectedTournament;
+import static com.goltqup.capablanca.TournamentProvider.getExpectedTournamentFromJson;
 import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -48,8 +49,8 @@ public class TournamentServiceTest {
     }
 
     @Test
-    public void testSave() {
-        final Tournament expectedTournament = getExpectedTournament();
+    public void testSave() throws IOException {
+        final Tournament expectedTournament = getExpectedTournamentFromJson();
 
         final Mono<Tournament> tournamentMono = tournamentService.save(expectedTournament);
 
@@ -63,8 +64,8 @@ public class TournamentServiceTest {
     }
 
     @Test
-    public void testSaveTwiceTheSameTournamentOnlySavesOneDocument() {
-        final Tournament expectedTournament = getExpectedTournament();
+    public void testSaveTwiceTheSameTournamentOnlySavesOneDocument() throws IOException {
+        final Tournament expectedTournament = getExpectedTournamentFromJson();
 
         final Mono<Tournament> tournamentMono = tournamentService.save(expectedTournament);
         final Mono<Tournament> tournamentMonoTwice = tournamentService.save(expectedTournament);
@@ -91,8 +92,9 @@ public class TournamentServiceTest {
     }
 
     @Test
-    public void testGetTournamentsAfterSavingOne() {
-        final Tournament expectedTournament = tournamentService.save(getExpectedTournament()).block();
+    public void testGetTournamentsAfterSavingOne() throws IOException {
+        final Tournament expectedTournamentFromJson = getExpectedTournamentFromJson();
+        final Tournament expectedTournament = tournamentService.save(expectedTournamentFromJson).block();
 
         final Flux<Tournament> tournamentFlux = tournamentService.getTournaments();
 
@@ -109,8 +111,9 @@ public class TournamentServiceTest {
     }
 
     @Test
-    public void testGetTournamentByIdAfterSavingOne() {
-        final Tournament expectedTournament = tournamentService.save(getExpectedTournament()).block();
+    public void testGetTournamentByIdAfterSavingOne() throws IOException {
+        final Tournament expectedTournamentFromJson = getExpectedTournamentFromJson();
+        final Tournament expectedTournament = tournamentService.save(expectedTournamentFromJson).block();
 
         final Mono<Tournament> tournamentMono = tournamentService.getTournament(TOURNAMENT_ID);
 
