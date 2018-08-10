@@ -54,9 +54,7 @@ public class TournamentService {
     }
 
     private Set<Group> getGroupSet(final Set<GroupDocument> groupDocumentSet) {
-        return groupDocumentSet.stream()
-                .map(this::getGroup)
-                .collect(toSet());
+        return null;
     }
 
     private Group getGroup(final GroupDocument groupDocument) {
@@ -64,9 +62,7 @@ public class TournamentService {
     }
 
     private Set<Team> getTeamSet(final Set<TeamDocument> teamDocumentSet) {
-        return teamDocumentSet.stream()
-                .map(this::getTeam)
-                .collect(toSet());
+        return null;
     }
 
     private Team getTeam(final TeamDocument teamDocument) {
@@ -74,9 +70,7 @@ public class TournamentService {
     }
 
     private Set<Match> getMatchSet(final Set<MatchDocument> matchDocumentSet) {
-        return matchDocumentSet.stream()
-                .map(this::getMatch)
-                .collect(toSet());
+        return null;
     }
 
     private Match getMatch(final MatchDocument matchDocument) {
@@ -96,9 +90,7 @@ public class TournamentService {
     }
 
     private Set<GroupDocument> getGroupDocumentSet(final Set<Group> groupSet) {
-        return groupSet.stream()
-                .map(this::getGroupDocument)
-                .collect(toSet());
+        return null;
     }
 
     private GroupDocument getGroupDocument(final Group group) {
@@ -109,13 +101,11 @@ public class TournamentService {
     }
 
     private Set<TeamDocument> getTeamDocumentSet(final Set<Team> teamSet) {
-        return teamSet.stream()
-                .map(team -> new TeamDocument(team.getName(), team.getId()))
-                .collect(toSet());
+        return null;
     }
 
     private Set<MatchDocument> getMatchDocumentSet(final Set<Match> matchSet) {
-        return matchSet.stream().map(this::getMatchDocument).collect(toSet());
+        return null;
     }
 
     private MatchDocument getMatchDocument(final Match match) {
